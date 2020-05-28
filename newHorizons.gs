@@ -1,48 +1,4 @@
-// Copyright 2020 Ben Johnson
-
-function computeTrend(arg1) { //newleaf trends
- array = arg1.toString().split(",");
-  for (i = 0;i < (array.length);i++){
-   array[i] = Number(array[i]); 
-  }
-  
-  //spike check
-  
-  var spikes = 0;
-  var spikeProgress = 0;
-  
-  for (i = 1;i < (array.length);i++){
-    if (array[i] > array[i-1]){
-      spikeProgress++; 
-    }
-    if (array[i] < array[i-1] && array[i] > 0){
-      if (spikeProgress > 0 && spikeProgress < 3) {
-        return "RANDOM";
-      }
-    }
-    if (spikeProgress == 3 && array[i] > 300){
-      return "HIGH SPIKE";
-    }
-    if (spikeProgress == 4 && array[i] > 200){
-      return "LOW SPIKE";
-    }
-    
-    if ((array[i] > array[i-1]) && (array[i] > array[i+1])) {
-      spikes++;
-    }
-  }
-  
-  if (array[1] > array[0] || array[1] > 100 || spikes > 1) 
-    return "RANDOM";
-
-  if (spikes == 1)
-    return "SPIKING";
-
-    if (spikes == 0) 
-    return "DECLINING";
-}
-
-function tPPL(prices,trend) { //TurnipProphet PermaLink
+function tPPL(prices,trend) { //this creates a TurnipProphet PermaLink
   array = prices.toString().split(","); //turn prices into array
   url="https://turnipprophet.io/?prices="; //set up url
   for (i = 0;i < (array.length);i++) { //sub in prices separated by periods, if empty replace with period
@@ -65,6 +21,8 @@ function tPPL(prices,trend) { //TurnipProphet PermaLink
     return url; //return completed url
   }
 }
+
+
 //the big boi, ACNH turnipprophet immitation code. accept no genuines!
 function predict(open,priceData,trendData,previousTrend) {
   var trendNames = ["Fluctuating","Small Spike","Large Spike","Decreasing"]
@@ -209,8 +167,10 @@ function predict(open,priceData,trendData,previousTrend) {
   
   range.push(pattern) //add the pattern possibilites to the end of the range array
   range.unshift(probs) //add the pattern counts to the start of the range array 
-  //this shit is so it displays across in one row instead of down in a column
+  
+  //this shit is so it displays across in a row instead of down in a column
   var fin = []
   fin[0] = range;
+  
   return fin;
 }
