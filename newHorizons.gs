@@ -1,3 +1,7 @@
+//Based on work by Ninja (https://twitter.com/_Ninji/status/1244818665851289602?s=20) and Mike Bryant (https://github.com/mikebryant)
+// Copyright 2020 Ben Johnson
+
+
 function tPPL(prices,trend) { //this creates a TurnipProphet PermaLink
   array = prices.toString().split(","); //turn prices into array
   url="https://turnipprophet.io/?prices="; //set up url
