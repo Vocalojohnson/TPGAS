@@ -1,3 +1,5 @@
+// Copyright 2020 Ben Johnson
+
 function computeTrend(arg1) { //newleaf trends
  array = arg1.toString().split(",");
   for (i = 0;i < (array.length);i++){
