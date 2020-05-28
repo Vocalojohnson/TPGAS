@@ -103,7 +103,11 @@ function predict(open,priceData,trendData,previousTrend) {
     seg++;
   }
   
-  //this part counts how many of each trend type you have
+  /*
+  this part counts how many of each trend type you have
+  this was because it originally only displayed how many of each trend your data matched to, 
+  but it was later repurposed to be used in calculating the percentages by virtue of telling us whether we match a type of trend or not.
+  */
   var tCount =[0,0,0,0];
   for (var item in trendData) {
     if (trendData[item][12] == "Fluctuating") {
@@ -157,7 +161,9 @@ function predict(open,priceData,trendData,previousTrend) {
     range[c] = range[c][0] + "-" + range[c][1];
   }
 
-  for (item in priceSeq) {
+  
+  //this mostly works but breaks in certain situations. but in general, if a price drops by 3 it cant be fluctating, if it drops by 6+ it has to be fluctuating
+  for (item in priceSeq) { 
     if (tCount[0] == 0 || tCount[1]+tCount[2]+tCount[3] == 0 ){break}
     if (item > 0) { //dont operate on the first one, dingus. theres no previous price
       var dif = priceSeq[item-1][1] - priceSeq[item][1] //find differences between previous price and current price
@@ -182,7 +188,7 @@ function predict(open,priceData,trendData,previousTrend) {
   }
   pattern = pArray.join("/"); //mash it together for single cell display  
   
- 
+ //this is the percentage calculation. it calcs the chance of a certain price showing up in your possible trends and then scales them to 100%
   var tRanges = [2380,400,35,5]
   if (trendData.length < 72) {
     for (item in tCount){
@@ -194,7 +200,7 @@ function predict(open,priceData,trendData,previousTrend) {
     }
   }
   for (item in probability) {
-    probability[item] = Math.floor(probability[item].toFixed(2) *100)
+    probability[item] = Math.floor(probability[item].toFixed(2) *100) //round shit off otherwise you get big ass doubles.
   }
   //var matches = tCount.join("-"); //mash it together for single cell display
   var probs = probability.join("-")
